@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# 🧠 CliffNotes AI — Progress Tracker (Flask Backend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### CliffNotes AI is a lightweight web application that summarizes articles, extracts quotes with contextual speaker attribution, and tracks recent summaries locally. The app combines a React TypeScript frontend with a Flask backend, leveraging HuggingFace Transformers for summarization and spaCy/Newspaper3k for text extraction.
 
-Currently, two official plugins are available:
+# Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Article Input: Paste text directly or provide a URL.
 
-## React Compiler
+Summarization: Chunked summarization (~700 words per chunk) using facebook/bart-large-cnn.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Quote Extraction: Detects quotes and attempts speaker attribution contextually using regex + spaCy.
 
-## Expanding the ESLint configuration
+Recent Summaries: Stores last 5 summaries in localStorage with date, source, summary, and quotes.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Results Display: Summary and quotes rendered in a Bootstrap ListGroup with speaker labels.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Navigation: Home → InputArticle → Results → RecentSummariesList.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Planned Enhancements: Export as PDF/Markdown, copy-to-clipboard, demo articles, dark mode, key quote highlighting.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Frontend: React + TypeScript, Vite, Bootstrap, React-Bootstrap, Framer Motion, Axios.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Backend: Python, Flask, Flask-CORS, HuggingFace Transformers, spaCy, Newspaper3k, Torch.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Storage: Browser localStorage for recent summaries.
+
+Project Structure
+CliffNotesAI/
+│
+├─ notesBackend/           
+│   ├─ app.py
+│   ├─ requirements.txt
+│   └─ venv/               
+│
+├─ src/                    
+│   ├─ pages/
+│   │   ├─ Home.tsx
+│   │   ├─ InputArticle.tsx
+│   │   ├─ Results.tsx
+│   │   └─ RecentSummariesList.tsx
+│   ├─ hooks/
+│   │   └─ useRecentSummaries.tsx
+│   └─ App.tsx
+│
+├─ public/
+├─ package.json
+├─ vite.config.ts
+└─ .gitignore
+
+# Installation
+
+Clone the repository
+
+git clone <repo-url>
+cd CliffNotesAI
+
+
+Setup backend
+
+cd notesBackend
+python -m venv venv
+venv\Scripts\activate   # Windows
+pip install -r requirements.txt
+
+
+Setup frontend
+
+cd ..
+npm install
+npm run dev
+
+
+Run backend
+
+cd notesBackend
+venv\Scripts\activate   # Windows
+flask run
+
+
+The frontend will connect to http://127.0.0.1:5000 for API requests.
+
+# Usage
+
+Open the app in your browser.
+
+Paste an article or provide a URL (max 4,000 words).
+
+Click Summarize to generate a summary and extract quotes.
+
+View the summary and quotes on the Results page.
+
+Recent summaries are accessible from the Recent Summaries link.
+
+# Notes & Constraints
+
+Max article length: 4,000 words.
+
+LocalStorage only keeps the last 5 summaries.
