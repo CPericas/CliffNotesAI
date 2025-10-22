@@ -1,4 +1,4 @@
-# 🧠 CliffNotes AI — Progress Tracker (Flask Backend)
+# 🧠 CliffNotes AI — Progress Tracker (Building In Progress)
 
 ### CliffNotes AI is a lightweight web application that summarizes articles, extracts quotes with contextual speaker attribution, and tracks recent summaries locally. The app combines a React TypeScript frontend with a Flask backend, leveraging HuggingFace Transformers for summarization and spaCy/Newspaper3k for text extraction.
 
